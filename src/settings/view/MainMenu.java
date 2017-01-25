@@ -2,8 +2,14 @@ package settings.view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 
 import javax.swing.*;
+
+import settings.control.Controller;
 
 public class MainMenu extends JPanel
 {
@@ -14,10 +20,14 @@ public class MainMenu extends JPanel
 	private JButton fix;
 	private JButton setBackground;
 	private SpringLayout layout;
+	private Controller controller;
+	private JFileChooser fileChooser;
 
-	public MainMenu()
+	public MainMenu(Controller controller)
 	{
 		super();
+		fileChooser = new JFileChooser();
+		this.controller = controller;
 		update = new JButton("Check for Updates");
 		settings = new JButton("Settings");
 		updateInfo = new JButton("Update UserName/Password");
@@ -106,20 +116,29 @@ public class MainMenu extends JPanel
 			}
 
 		});
-		update.addActionListener(new ActionListener()
-		{
-
-			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-				updatePressed();
-			}
-
-		});
+//		update.addActionListener(new ActionListener()
+//		{
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e)
+//			{
+//				updatePressed();
+//			}
+//
+//		});
 	}
 
 	private void updatePressed()
 	{
+		if(this.controller.checkForUpdates())
+		{
+			if(JOptionPane.showConfirmDialog(this, "An update was detected would you like to update now")==0)
+			{
+				controller.update();
+			}
+			//System.out.println(JOptionPane.showConfirmDialog(this, "An update was detected would you like to update now"));
+		}
+		else{JOptionPane.showMessageDialog(this, "There are no updates currently");}
 	}
 
 	private void settingsPressed()
@@ -128,13 +147,44 @@ public class MainMenu extends JPanel
 
 	private void updateInfoPressed()
 	{
+		controller.setOption(0,"UserName: " +JOptionPane.showInputDialog(this,"Please enter your username"));
+		controller.setOption(1,"UserName: "+ JOptionPane.showInputDialog(this,"Please enter your username"));
 	}
 
 	private void fixPressed()
 	{
+		Process process;
+		Writer toSudo;
+		String password = controller.grab(1);
+		try
+		{
+			process = Runtime.getRuntime().exec("/usr/bin/sudo -S sudo chmod 755 /System/Library/CoreServices/DefaultDesktop.jpg");
+			toSudo = new OutputStreamWriter(process.getOutputStream());
+			toSudo.write(password);
+			toSudo.write('\n'); // sudo's docs demand a newline after the
+			                    // password
+			toSudo.close(); // but closing the stream might be sufficient
+			JOptionPane.showMessageDialog(this, "fix was a succses");
+		} catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(this, "fix failed");
+		}
 	}
 
 	private void setBackroundPressed()
 	{
+		String Path;
+		fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+		int result = fileChooser.showOpenDialog(this);
+		if (result == JFileChooser.APPROVE_OPTION)
+		{
+			File selected = fileChooser.getSelectedFile();
+			Path = selected.getPath();
+			System.out.println(Path);
+			controller.MovePicture(Path);
+		}
+	
 	}
 }

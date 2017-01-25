@@ -16,7 +16,7 @@ public class SettingsFrame extends JFrame
 	{
 		super();
 		this.controller = controller;
-		this.panel = new MainMenu();
+		this.panel = new MainMenu(controller);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setup();
 	}
