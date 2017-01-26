@@ -128,6 +128,8 @@ public class MainMenu extends JPanel
 //		});
 	}
 
+	
+
 	private void updatePressed()
 	{
 		if(this.controller.checkForUpdates())
@@ -143,12 +145,14 @@ public class MainMenu extends JPanel
 
 	private void settingsPressed()
 	{
+
+		controller.setPanel(new Settings(controller));
 	}
 
 	private void updateInfoPressed()
 	{
 		controller.setOption(0,"UserName: " +JOptionPane.showInputDialog(this,"Please enter your username"));
-		controller.setOption(1,"UserName: "+ JOptionPane.showInputDialog(this,"Please enter your username"));
+		controller.setOption(1,"Password: "+ JOptionPane.showInputDialog(this,"Please enter your password"));
 	}
 
 	private void fixPressed()

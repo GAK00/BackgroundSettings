@@ -1,5 +1,7 @@
 package settings.control;
 
+import javax.swing.JPanel;
+
 import settings.model.*;
 import settings.view.SettingsFrame;
 
@@ -38,5 +40,13 @@ public class Controller
 		String name = data[data.length-1].substring(0, data[data.length-1].indexOf("."));
 		String extension = data[data.length-1].substring(data[data.length-1].indexOf(".")+1);
 		files.copyData(name, string, extension);
+	}
+	public String getOption(int Option)
+	{
+		return files.getOption(Option);
+		}
+	public void setPanel(JPanel pan)
+	{
+		frame.setContentPane(pan);
 	}
 }

@@ -1,9 +1,11 @@
 package settings.view;
 
+import java.awt.CardLayout;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import settings.control.Controller;
 
@@ -35,6 +37,14 @@ public class SettingsFrame extends JFrame
 		this.setLocation(posX, posY);
 		this.setContentPane(panel);
 		this.setVisible(true);
+	}
+	
+	public void setPanel(JPanel pan)
+	{
+		panel.removeAll();
+		panel.add(pan);
+		panel.revalidate();
+		panel.repaint();
 	}
 
 }

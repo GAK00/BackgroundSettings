@@ -2,7 +2,7 @@ gkun9931
 leafgolf4
 RunFixMode: false
 RunSlideShow: true
-SlideShowTimer: M:0,S:30,MS:0
-Update: false
+slideShowTimer: M:0,S:30,MS:0
+Update: fals
+autoUpdate: true
 Version: 0.0.1
-rekt: true
