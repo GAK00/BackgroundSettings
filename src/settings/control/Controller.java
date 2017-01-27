@@ -12,9 +12,10 @@ public class Controller
 	private FileManipulator files;
 	public Controller()
 	{
-		frame = new SettingsFrame(this);
+
 		updater = new Updater();
 		files = new FileManipulator();
+		frame = new SettingsFrame(this);
 	}
 	public void start(){}
 	public boolean checkForUpdates()
@@ -45,8 +46,8 @@ public class Controller
 	{
 		return files.getOption(Option);
 		}
-	public void setPanel(JPanel pan)
+	public void setPanel(String pan)
 	{
-		frame.setContentPane(pan);
+		frame.setPanel(pan);
 	}
 }

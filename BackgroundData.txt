@@ -1,8 +1,8 @@
-gkun9931
-leafgolf4
+UserName: gkun9931
+Password: leafgolf4
 RunFixMode: false
-RunSlideShow: true
-slideShowTimer: M:0,S:30,MS:0
-Update: fals
-autoUpdate: true
-Version: 0.0.1
+RunSlideShow: false
+slideShowTimer: M:1,S:30,MS:20
+autoUpdate: false
+Update: true
+Version: 1.0.0

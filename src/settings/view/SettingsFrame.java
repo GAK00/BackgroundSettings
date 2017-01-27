@@ -12,13 +12,17 @@ import settings.control.Controller;
 public class SettingsFrame extends JFrame
 {
 	private Controller controller;
-	private MainMenu panel;
+	private JPanel panel;
+	private CardLayout layout;
 
 	public SettingsFrame(Controller controller)
 	{
 		super();
 		this.controller = controller;
-		this.panel = new MainMenu(controller);
+		layout = new CardLayout();
+		this.panel = new JPanel(layout);
+		panel.add(new MainMenu(controller),"Main");
+		panel.add(new Settings(controller),"Settings");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setup();
 	}
@@ -39,12 +43,9 @@ public class SettingsFrame extends JFrame
 		this.setVisible(true);
 	}
 	
-	public void setPanel(JPanel pan)
+	public void setPanel(String pan)
 	{
-		panel.removeAll();
-		panel.add(pan);
-		panel.revalidate();
-		panel.repaint();
+		layout.show(panel, pan);
 	}
 
 }

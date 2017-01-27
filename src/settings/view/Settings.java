@@ -127,9 +127,11 @@ public class Settings extends JPanel
 					mili = 0;
 				}
 				controller.setOption(4, "slideShowTimer: M:"+minute+",S:"+second+",MS:"+mili);
-				controller.setPanel(new MainMenu(controller));
+				controller.setPanel("Main");
+				controller.setOption(6, "Update: true");
 			
 			}
+	
 		});
 	}
 

@@ -146,7 +146,7 @@ public class MainMenu extends JPanel
 	private void settingsPressed()
 	{
 
-		controller.setPanel(new Settings(controller));
+		controller.setPanel("Settings");
 	}
 
 	private void updateInfoPressed()

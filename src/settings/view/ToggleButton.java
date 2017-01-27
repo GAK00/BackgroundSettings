@@ -16,9 +16,11 @@ public class ToggleButton extends JButton
 	public ToggleButton(int linkedOption,Controller controller,String OptionName)
 	{
 		super();
+		this.controller = controller;
 		this.OptionName = OptionName;
 		this.option = linkedOption;
 		state = controller.getOption(linkedOption);
+		System.out.println(state);
 		this.setText(state);
 		setupLink();
 	}
@@ -45,8 +47,11 @@ public class ToggleButton extends JButton
 		{
 			state="false";
 		}
-		controller.setOption
-		(option, OptionName+state);
+		controller.setOption(option, OptionName+state);
+		this.setText(state);
+
+		this.getRootPane().revalidate();
+		this.getRootPane().repaint();
 	}
 	
 

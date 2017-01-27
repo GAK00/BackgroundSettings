@@ -15,9 +15,11 @@ import java.util.List;
 public class FileManipulator
 {
 	File mainDirectory;
+	boolean hasCalled;
 
 	public FileManipulator()
 	{
+		hasCalled = false;
 		try
 		{
 			mainDirectory = new File(getParentDirectory());
@@ -30,27 +32,44 @@ public class FileManipulator
 
 	public void setOption(int OptionNumber, String Option)
 	{
-		List<String> options;
-		String option = "";
-		try
+		if (!hasCalled)
 		{
-			options = Files.readAllLines(Paths.get(getParentDirectory() + "/BackgroundData.txt"));
-			options.set(OptionNumber, Option);
-			String toWrite = "";
-			for (int index = 0; index < options.size(); index++)
+			hasCalled = true;
+			List<String> options;
+			String option = "";
+			try
 			{
-				toWrite += options.get(index);
-				if (index != options.size() - 1)
+				options = Files.readAllLines(Paths.get(getParentDirectory() + "/BackgroundData.txt"));
+				// options.set(OptionNumber, Option);
+				// String version = options.get(options.size()-1);
+				// System.out.println(version);
+				String toWrite = "";
+				for (int index = 0; index < options.size(); index++)
 				{
-					toWrite += "\n";
+					if (index != OptionNumber)
+					{
+						toWrite += options.get(index);
+					} else
+					{
+						toWrite += Option;
+					}
+					
+					if (index != (options.size() - 1))
+					{
+
+						toWrite += "\n";
+					}
+
 				}
+				this.writeData("BackgroundData", toWrite);
+			} catch (IOException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			this.writeData("BackgroundData", toWrite);
-		} catch (IOException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
 		}
+		hasCalled = false;
 	}
 
 	public String getOption(int optionNumber)
@@ -102,7 +121,7 @@ public class FileManipulator
 		Path path = Paths.get(mainDirectory.getPath() + "/" + fileName + fileType);
 		try
 		{
-			Files.write(path, data, StandardOpenOption.CREATE);
+			Files.write(path, data, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
 		} catch (IOException e)
 		{
 			e.printStackTrace();
@@ -171,7 +190,7 @@ public class FileManipulator
 		return Data;
 	}
 
-	public void copyData(String fileName,String FilePath, String fileType)
+	public void copyData(String fileName, String FilePath, String fileType)
 	{
 		fileType = "." + fileType;
 		Path path;
